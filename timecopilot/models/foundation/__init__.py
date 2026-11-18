@@ -10,6 +10,7 @@ from .timegpt import TimeGPT, TimeGPTFinetuningConfig
 from .timesfm import TimesFM
 from .timestral import Timestral
 from .toto import Toto
+from .lag_llama import LagLlama
 
 __all__ = [
     "Chronos",
@@ -24,6 +25,7 @@ __all__ = [
     "TimesFM",
     "Timestral",
     "Toto",
+    "LagLlama",
 ]
 
 if sys.version_info >= (3, 11):
