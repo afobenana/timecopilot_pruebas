@@ -24,10 +24,15 @@ class Forecaster(_Forecaster):
 
     def _ensure_forecaster_state(self) -> None:
         if not hasattr(self, "exog_strategy"):
-            self.exog_strategy = normalize_exog_strategy(False)
+            supports_native_exog = getattr(self, "supports_native_futr_exog", None)
+            default_exog_strategy = (
+                "auto"
+                if callable(supports_native_exog) and supports_native_exog()
+                else False
+            )
+            self.exog_strategy = normalize_exog_strategy(default_exog_strategy)
         if not hasattr(self, "reuse_loaded_model"):
             self.reuse_loaded_model = True
-
     def cross_validation(
         self,
         df: pd.DataFrame,

@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, TypeVar
 
 import pandas as pd
-from foundationforecast.core.multi_model import MultiModelForecasterMixin
+from .multi_model import MultiModelForecasterMixin
 
 from .models.utils.forecaster import Forecaster
 
@@ -93,6 +93,9 @@ class TimeCopilotForecaster(MultiModelForecasterMixin, Forecaster):
         freq: str | None = None,
         level: list[int | float] | None = None,
         quantiles: list[float] | None = None,
+        *,
+        X_df: pd.DataFrame | None = None,
+        futr_exog_list: list[str] | None = None,
     ) -> pd.DataFrame:
         """
         Internal pandas-only forecast implementation.
@@ -107,6 +110,8 @@ class TimeCopilotForecaster(MultiModelForecasterMixin, Forecaster):
             freq=freq,
             level=level,
             quantiles=quantiles,
+            X_df=X_df,
+            futr_exog_list=futr_exog_list,
         )
 
     def _forecast_distributed(
@@ -182,6 +187,9 @@ class TimeCopilotForecaster(MultiModelForecasterMixin, Forecaster):
         level: list[int | float] | None = None,
         quantiles: list[float] | None = None,
         num_partitions: int | None = None,
+        *,
+        X_df: pd.DataFrame | None = None,
+        futr_exog_list: list[str] | None = None,
     ) -> AnyDataFrame:
         """
         Generate forecasts for one or more time series using all models.
@@ -258,6 +266,8 @@ class TimeCopilotForecaster(MultiModelForecasterMixin, Forecaster):
             freq=freq,
             level=level,
             quantiles=quantiles,
+            X_df=X_df,
+            futr_exog_list=futr_exog_list,
         )
 
     def _cross_validation_pandas(
